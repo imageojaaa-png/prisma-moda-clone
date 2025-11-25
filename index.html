@@ -3,63 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRISMA MODA - Clone</title>
+    <title>PRISMA MODA</title>
     <style>
         /* --- RESET BÁSICO --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: #f4f4f4;
-            color: #333;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        body { background-color: #f4f4f4; color: #333; overflow-x: hidden; }
 
         /* --- HEADER --- */
         header {
-            background-color: #fcfbf9; /* Color crema muy suave */
-            padding: 20px 40px;
+            background-color: #fcfbf9;
+            padding: 15px 20px;
             border-bottom: 1px solid #e0e0e0;
+            position: sticky; /* Menú pegajoso arriba */
+            top: 0;
+            z-index: 100;
         }
 
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            gap: 10px;
         }
 
-        .logo-container {
-            text-align: center;
-            flex-grow: 1;
-        }
-
-        .logo {
+        /* Botón Hamburguesa (Visible solo en móvil) */
+        .sidebar-toggle {
+            background: none;
+            border: none;
             font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .logo span {
-            font-family: 'Georgia', serif; /* Fuente con serifa para "PRISMA" */
-        }
-
-        .user-menu {
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
             cursor: pointer;
+            padding: 5px;
+            display: none; /* Oculto en PC */
         }
 
+        .logo-container { text-align: center; }
+        .logo { font-size: 20px; font-weight: bold; letter-spacing: 2px; display: flex; align-items: center; gap: 5px; }
+        .logo span { font-family: 'Georgia', serif; font-size: 24px; }
+
+        .user-menu { font-size: 13px; cursor: pointer; white-space: nowrap; }
+
+        /* Navegación (PC) */
         nav ul {
             list-style: none;
             display: flex;
@@ -69,482 +51,191 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             color: #555;
+            margin-top: 15px;
         }
 
-        nav ul li:hover {
-            color: #000;
-            cursor: pointer;
-        }
-
-        /* --- LAYOUT PRINCIPAL (GRID) --- */
+        /* --- LAYOUT PRINCIPAL --- */
         .main-container {
             display: grid;
-            grid-template-columns: 1fr; /* móvil: una columna (sidebar arriba) */
+            grid-template-columns: 280px 1fr; /* Estructura PC */
             min-height: 100vh;
-            gap: 0;
         }
 
-        /* --- SIDEBAR (IZQUIERDA) --- */
+        /* --- SIDEBAR (Barra Lateral) --- */
         .sidebar {
-            background-color: #E6DBCB; /* Color beige de la imagen */
-            padding: 24px 20px;
+            background-color: #E6DBCB;
+            padding: 30px;
+            height: 100%; /* Llenar altura en PC */
         }
+        
+        /* Links del menú móvil (ocultos en PC) */
+        .mobile-nav-links { display: none; } 
 
-        .sidebar-title {
-            font-size: 20px;
-            font-weight: 800;
-            text-transform: uppercase;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            color: #2a2a2a;
-        }
+        .sidebar-title { font-size: 18px; font-weight: 800; text-transform: uppercase; margin-bottom: 25px; color: #2a2a2a; }
+        .sidebar-item { margin-bottom: 30px; }
+        .sidebar-img { width: 100%; height: 120px; object-fit: cover; margin-bottom: 10px; background: #ccc; }
+        .sidebar-item h3 { font-size: 14px; margin-bottom: 5px; }
+        .sidebar-item p { font-size: 12px; color: #555; margin-bottom: 10px; line-height: 1.4; }
+        .btn-ver-mas { background: #fff; border: none; padding: 5px 15px; font-size: 11px; font-weight: bold; cursor: pointer; }
+        
+        /* Botón cerrar sidebar (Solo móvil) */
+        .sidebar-close { display: none; position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 30px; cursor: pointer; }
 
-        .sidebar-item {
-            margin-bottom: 24px;
-        }
+        /* --- CONTENIDO --- */
+        .content-area { background: #fff; padding: 10px; }
+        
+        .hero-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-bottom: 5px; }
+        .hero-card { position: relative; height: 400px; overflow: hidden; }
+        .hero-card img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-text { position: absolute; bottom: 20px; left: 0; width: 100%; text-align: center; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.6); }
+        .hero-text h2 { font-size: 18px; text-transform: uppercase; }
 
-        .sidebar-img {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-            margin-bottom: 10px;
-            background-color: #ccc;
-        }
+        .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+        .gallery-item { height: 200px; background: #eee; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        .sidebar-item h3 {
-            font-size: 14px;
-            margin-bottom: 6px;
-        }
-
-        .sidebar-item p {
-            font-size: 12px;
-            color: #555;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-
-        .btn-ver-mas {
-            background-color: #fcfbf9;
-            border: none;
-            padding: 6px 16px;
-            font-size: 11px;
-            cursor: pointer;
-            border-radius: 4px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        /* --- CONTENIDO PRINCIPAL (DERECHA) --- */
-        .content-area {
-            background-color: #fff;
-            padding: 8px; /* Espacio pequeño entre fotos */
-        }
-
-        /* Sección Hero (fotos grandes) */
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 5px;
-            margin-bottom: 8px;
-        }
-
-        .hero-card {
-            position: relative;
-            height: 260px;
-            overflow: hidden;
-        }
-
-        .hero-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .hero-text {
-            position: absolute;
-            bottom: 16px;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            color: white;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-            padding: 0 12px;
-        }
-
-        .hero-text h2 {
-            font-size: 18px;
-            font-weight: 400;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .hero-text span {
-            font-size: 12px;
-            opacity: 0.9;
-        }
-
-        /* Sección Galería (Grid inferior) */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 5px;
-        }
-
-        .gallery-item {
-            height: 150px;
-            background-color: #eee;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* Responsive breakpoints */
-        @media (min-width: 600px) {
-            nav ul { gap: 18px; }
-            .hero-card { height: 320px; }
-            .gallery-grid { grid-template-columns: repeat(3,1fr); }
-            .gallery-item { height: 180px; }
-        }
-
-        @media (min-width: 900px) {
-            .main-container { grid-template-columns: 240px 1fr; }
-            .sidebar { padding: 30px; }
-            .hero-grid { grid-template-columns: repeat(2,1fr); }
-            .hero-card { height: 340px; }
-            .gallery-grid { grid-template-columns: repeat(3,1fr); }
-            .gallery-item { height: 180px; }
-        }
-
-        @media (min-width: 1200px) {
-            .main-container { grid-template-columns: 280px 1fr; }
-            .hero-grid { grid-template-columns: repeat(3, 1fr); }
-            .hero-card { height: 400px; }
-            .gallery-grid { grid-template-columns: repeat(4,1fr); }
-            .gallery-item { height: 200px; }
-        }
-
-        /* Small niceties */
-        @media (max-width: 420px) {
-            header { padding: 12px 14px; }
-            .logo { font-size: 18px; }
-            nav ul { font-size: 11px; gap: 8px; }
-            .sidebar-img { height: 100px; }
-        }
-
-        /* Sidebar toggle / overlay (mobile) */
-        .sidebar-toggle {
+        /* --- SOMBRA DE FONDO (OVERLAY) --- */
+        .overlay {
             display: none;
-            background: transparent;
-            border: none;
-            font-size: 22px;
-            padding: 6px 10px;
-            cursor: pointer;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 150;
         }
 
-        .sidebar-close {
-            display: none;
-            position: absolute;
-            right: 12px;
-            top: 12px;
-            background: transparent;
-            border: none;
-            font-size: 26px;
-            cursor: pointer;
-            color: #333;
-        }
-
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            z-index: 30;
-        }
-
+        /* --- RESPONSIVE / MÓVIL (Aquí ocurre la magia) --- */
         @media (max-width: 900px) {
-            .sidebar-toggle { display: inline-block; z-index: 60; }
+            /* 1. Ocultar menú de texto superior */
+            nav ul { display: none; }
+            
+            /* 2. Mostrar botón hamburguesa */
+            .sidebar-toggle { display: block; }
+
+            /* 3. Cambiar Grid principal a 1 sola columna */
+            .main-container { grid-template-columns: 1fr; }
+
+            /* 4. Transformar Sidebar en Menú Deslizante (Off-Canvas) */
             .sidebar {
                 position: fixed;
-                left: 0;
-                top: 0;
-                bottom: 0;
-                width: 280px;
-                transform: translateX(-110%);
-                transition: transform .28s ease;
-                z-index: 40;
-                overflow-y: auto;
+                top: 0; left: 0; bottom: 0;
+                width: 80%; /* Ancho del menú en móvil */
+                max-width: 300px;
+                z-index: 200;
+                transform: translateX(-110%); /* Oculto a la izquierda */
+                transition: transform 0.3s ease;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+                overflow-y: auto; /* Scroll dentro del menú */
             }
-            .sidebar.open { transform: translateX(0); }
-            .sidebar-close { display: block; }
-            .main-container { position: relative; }
-            .sidebar-overlay.active { display: block; }
-        }
 
+            .sidebar.active { transform: translateX(0); /* Mostrar */ }
+            .sidebar-close { display: block; }
+            .overlay.active { display: block; }
+
+            /* 5. Añadir los links de navegación dentro del Sidebar móvil */
+            .mobile-nav-links {
+                display: block;
+                list-style: none;
+                margin-bottom: 30px;
+                border-bottom: 1px solid #ccc;
+                padding-bottom: 20px;
+            }
+            .mobile-nav-links li { padding: 10px 0; font-weight: bold; text-transform: uppercase; font-size: 14px; border-bottom: 1px solid #eee; }
+
+            /* 6. Ajustar Grid de Fotos para Móvil */
+            .hero-grid { grid-template-columns: 1fr; } /* 1 foto grande */
+            .hero-card { height: 300px; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); } /* 2 columnas abajo */
+            .gallery-item { height: 150px; }
+        }
     </style>
 </head>
 <body>
 
+    <div class="overlay" onclick="toggleSidebar()"></div>
+
     <header>
         <div class="top-bar">
-            <button class="sidebar-toggle" aria-controls="sidebar" aria-expanded="false" aria-label="Abrir menú">☰</button>
-            <div style="width: 100px;"></div> <div class="logo-container">
-                <div class="logo">
-                    <span style="font-size: 30px;">&#9651;</span> PRISMA <br> <small style="font-size: 12px; letter-spacing: 5px;">MODA</small>
-                </div>
+            <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+            
+            <div class="logo-container">
+                <div class="logo"><span>&#9651;</span> PRISMA</div>
             </div>
-            <div class="user-menu">
-                👤 My Account ⌄
-            </div>
+            
+            <div class="user-menu">👤 Cuenta</div>
         </div>
+        
         <nav>
             <ul>
-                <li>Home</li>
-                <li>Trends</li>
-                <li>Editorials</li>
-                <li>Accessories</li>
-                <li>Beauty</li>
-                <li>Sustainable</li>
-                <li>About</li>
-                <li>Contact</li>
+                <li>Home</li> <li>Trends</li> <li>Editorials</li> <li>Accessories</li>
+                <li>Beauty</li> <li>Sustainable</li> <li>About</li> <li>Contact</li>
             </ul>
         </nav>
     </header>
 
     <div class="main-container">
         
-        <aside class="sidebar" id="sidebar">
-            <h2 class="sidebar-title">EMPRENDIMIENTOS<br>DE LA SEMANA</h2>
+        <aside class="sidebar" id="mySidebar">
+            <button class="sidebar-close" onclick="toggleSidebar()">&times;</button>
+            
+            <ul class="mobile-nav-links">
+                <li>Home</li>
+                <li>Trends</li>
+                <li>Editorials</li>
+                <li>Accessories</li>
+                <li>Contact</li>
+            </ul>
 
-            <button class="sidebar-close" aria-label="Cerrar menú">×</button>
+            <h2 class="sidebar-title">Emprendimientos<br>De la Semana</h2>
 
             <div class="sidebar-item">
-                <img src="img/women-1838768_640.jpg" alt="Emprendimiento: mujeres" class="sidebar-img">
+                <img src="img/women-1838768_640.jpg" class="sidebar-img" alt="Foto">
                 <h3>Hand woven textile</h3>
-                <p>Domescmer bras noworen andleor th kvars local fashion empreasar.</p>
+                <p>Moda local artesanal de alta calidad.</p>
                 <button class="btn-ver-mas">Ver más</button>
             </div>
-
+            
             <div class="sidebar-item">
-                <img src="img/portrait-8036356_640.jpg" alt="Retrato" class="sidebar-img">
+                <img src="img/portrait-8036356_640.jpg" class="sidebar-img" alt="Foto">
                 <h3>Small batch skincare</h3>
-                <p>Umium satch skincare elevato amer on art ir mere skincara putese.</p>
-                <button class="btn-ver-mas">Ver más</button>
-            </div>
-
-            <div class="sidebar-item">
-                <img src="img/fashion-835219_640.jpg" alt="Accesorios" class="sidebar-img">
-                <h3>Unique Jewelry</h3>
-                <p>Unique prece cimem de w ret omnim n nunelit dan namero jewelro.</p>
+                <p>Cuidado de piel orgánico y natural.</p>
                 <button class="btn-ver-mas">Ver más</button>
             </div>
         </aside>
 
         <section class="content-area">
-            
             <div class="hero-grid">
                 <div class="hero-card">
-                    <img src="img/fashion-2309519_640.jpg" alt="Fashion 1">
-                    <div class="hero-text">
-                        <h2>AW24 Trend Report</h2>
-                        <span>New Actors</span>
-                    </div>
+                    <img src="img/fashion-2309519_640.jpg" alt="Fashion">
+                    <div class="hero-text"><h2>AW24 Trends</h2></div>
                 </div>
                 <div class="hero-card">
-                    <img src="img/woman-9554464_640.webp" alt="Fashion 2">
-                    <div class="hero-text">
-                        <h2>Paris Fashion Week Recap</h2>
-                        <span>New Actors</span>
-                    </div>
+                    <img src="img/woman-9554464_640.webp" alt="Fashion">
+                    <div class="hero-text"><h2>Paris Recap</h2></div>
                 </div>
                 <div class="hero-card">
-                    <img src="img/man-9182458_640.jpg" alt="Fashion 3">
-                    <div class="hero-text">
-                        <h2>Street Stories</h2>
-                        <span>New Actors</span>
-                    </div>
+                    <img src="img/man-9182458_640.jpg" alt="Fashion">
+                    <div class="hero-text"><h2>Street Stories</h2></div>
                 </div>
             </div>
 
-            <!-- Galería principal: cambia o pega aquí tus elementos de imagen -->
             <div class="gallery-grid">
-                <div class="gallery-item"><img src="img/asian-7276658_640.jpg" alt="Gallery asian"></div>
-                <div class="gallery-item"><img src="img/girl-4860563_640.jpg" alt="Gallery girl"></div>
-                <div class="gallery-item"><img src="img/man-1866574_640.jpg" alt="Gallery man 1"></div>
-                <div class="gallery-item"><img src="img/man-5515150_640.jpg" alt="Gallery man 2"></div>
-                <div class="gallery-item"><img src="img/woman-2593366_640.jpg" alt="Gallery woman 1"></div>
-                <div class="gallery-item"><img src="img/woman-6115105_640.jpg" alt="Gallery woman 2"></div>
-                <div class="gallery-item"><img src="img/woman-6670772_640.jpg" alt="Gallery woman 3"></div>
-                <div class="gallery-item"><img src="img/woman-7121174_640.jpg" alt="Gallery woman 4"></div>
-                <div class="gallery-item"><img src="img/woman-7851024_640.jpg" alt="Gallery woman 5"></div>
-                <div class="gallery-item"><img src="img/woman-7851025_640.jpg" alt="Gallery woman 6"></div>
-                <div class="gallery-item"><img src="img/woman-8253239_640.jpg" alt="Gallery woman 7"></div>
-                <div class="gallery-item"><img src="img/woman-8584961_640.jpg" alt="Gallery woman 8"></div>
-                <div class="gallery-item"><img src="img/woman-9230049_640.jpg" alt="Gallery woman 9"></div>
+                <div class="gallery-item"><img src="img/asian-7276658_640.jpg"></div>
+                <div class="gallery-item"><img src="img/girl-4860563_640.jpg"></div>
+                <div class="gallery-item"><img src="img/man-1866574_640.jpg"></div>
+                <div class="gallery-item"><img src="img/man-5515150_640.jpg"></div>
+                <div class="gallery-item"><img src="img/woman-2593366_640.jpg"></div>
+                <div class="gallery-item"><img src="img/woman-6115105_640.jpg"></div>
+                <div class="gallery-item"><img src="img/woman-6670772_640.jpg"></div>
+                <div class="gallery-item"><img src="img/woman-7121174_640.jpg"></div>
             </div>
-
-            <!--
-                PASTE IMAGE SNIPPETS HERE
-                - Pegue sus bloques <img> o HTML relacionado con imágenes entre estas líneas.
-                - No elimine las líneas "PASTE IMAGE SNIPPETS START/END" si quiere conservar el espacio.
-
-                PASTE IMAGE SNIPPETS START
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                PASTE IMAGE SNIPPETS END
-            -->
-
         </section>
-
     </div>
 
-    <div class="sidebar-overlay" aria-hidden="true"></div>
-
     <script>
-        (function(){
-            const toggle = document.querySelector('.sidebar-toggle');
-            const sidebar = document.querySelector('#sidebar');
-            const closeBtn = document.querySelector('.sidebar-close');
-            const overlay = document.querySelector('.sidebar-overlay');
-
-            function openSidebar(){
-                sidebar.classList.add('open');
-                overlay.classList.add('active');
-                toggle && toggle.setAttribute('aria-expanded','true');
-                overlay.setAttribute('aria-hidden','false');
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeSidebar(){
-                sidebar.classList.remove('open');
-                overlay.classList.remove('active');
-                toggle && toggle.setAttribute('aria-expanded','false');
-                overlay.setAttribute('aria-hidden','true');
-                document.body.style.overflow = '';
-            }
-
-            toggle && toggle.addEventListener('click', function(){
-                if(sidebar.classList.contains('open')) closeSidebar(); else openSidebar();
-            });
-
-            closeBtn && closeBtn.addEventListener('click', closeSidebar);
-            overlay && overlay.addEventListener('click', closeSidebar);
-
-            // close if >900px to avoid stuck state
-            window.addEventListener('resize', function(){
-                if(window.innerWidth >= 900){
-                    sidebar.classList.remove('open');
-                    overlay.classList.remove('active');
-                    if(toggle) toggle.setAttribute('aria-expanded','false');
-                    document.body.style.overflow = '';
-                }
-            });
-        })();
+        function toggleSidebar() {
+            const sidebar = document.getElementById('mySidebar');
+            const overlay = document.querySelector('.overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
     </script>
-
 </body>
 </html>
