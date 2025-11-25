@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRISMA MODA - Clone</title>
+    <style>
+        /* --- RESET BÁSICO --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background-color: #fcfbf9; /* Color crema muy suave */
+            padding: 20px 40px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .logo-container {
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            font-family: 'Georgia', serif; /* Fuente con serifa para "PRISMA" */
+        }
+
+        .user-menu {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #555;
+        }
+
+        nav ul li:hover {
+            color: #000;
+            cursor: pointer;
+        }
+
+        /* --- LAYOUT PRINCIPAL (GRID) --- */
+        .main-container {
+            display: grid;
+            grid-template-columns: 280px 1fr; /* Sidebar fija, resto flexible */
+            min-height: 100vh;
+        }
+
+        /* --- SIDEBAR (IZQUIERDA) --- */
+        .sidebar {
+            background-color: #E6DBCB; /* Color beige de la imagen */
+            padding: 30px;
+        }
+
+        .sidebar-title {
+            font-size: 20px;
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            color: #2a2a2a;
+        }
+
+        .sidebar-item {
+            margin-bottom: 40px;
+        }
+
+        .sidebar-img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            background-color: #ccc;
+        }
+
+        .sidebar-item h3 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-item p {
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .btn-ver-mas {
+            background-color: #fcfbf9;
+            border: none;
+            padding: 5px 15px;
+            font-size: 11px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* --- CONTENIDO PRINCIPAL (DERECHA) --- */
+        .content-area {
+            background-color: #fff;
+            padding: 5px; /* Espacio pequeño entre fotos */
+        }
+
+        /* Sección Hero (3 fotos grandes) */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+
+        .hero-card {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .hero-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-text {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .hero-text h2 {
+            font-size: 18px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .hero-text span {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* Sección Galería (Grid inferior) */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+        }
+
+        .gallery-item {
+            height: 200px;
+            background-color: #eee;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="top-bar">
+            <div style="width: 100px;"></div> <div class="logo-container">
+                <div class="logo">
+                    <span style="font-size: 30px;">&#9651;</span> PRISMA <br> <small style="font-size: 12px; letter-spacing: 5px;">MODA</small>
+                </div>
+            </div>
+            <div class="user-menu">
+                👤 My Account ⌄
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li>Home</li>
+                <li>Trends</li>
+                <li>Editorials</li>
+                <li>Accessories</li>
+                <li>Beauty</li>
+                <li>Sustainable</li>
+                <li>About</li>
+                <li>Contact</li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        
+        <aside class="sidebar">
+            <h2 class="sidebar-title">EMPRENDIMIENTOS<br>DE LA SEMANA</h2>
+
+            <div class="sidebar-item">
+                <img src="https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=400&auto=format&fit=crop" alt="Textile" class="sidebar-img">
+                <h3>Hand woven textile</h3>
+                <p>Domescmer bras noworen andleor th kvars local fashion empreasar.</p>
+                <button class="btn-ver-mas">Ver más</button>
+            </div>
+
+            <div class="sidebar-item">
+                <img src="https://images.unsplash.com/photo-1556228720-19975580c026?q=80&w=400&auto=format&fit=crop" alt="Skincare" class="sidebar-img">
+                <h3>Small batch skincare</h3>
+                <p>Umium satch skincare elevato amer on art ir mere skincara putese.</p>
+                <button class="btn-ver-mas">Ver más</button>
+            </div>
+
+            <div class="sidebar-item">
+                <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=400&auto=format&fit=crop" alt="Jewelry" class="sidebar-img">
+                <h3>Unique Jewelry</h3>
+                <p>Unique prece cimem de w ret omnim n nunelit dan namero jewelro.</p>
+                <button class="btn-ver-mas">Ver más</button>
+            </div>
+        </aside>
+
+        <section class="content-area">
+            
+            <div class="hero-grid">
+                <div class="hero-card">
+                    <img src="https://images.unsplash.com/photo-1539008835657-9e8e9680c956?q=80&w=800&auto=format&fit=crop" alt="Fashion 1">
+                    <div class="hero-text">
+                        <h2>AW24 Trend Report</h2>
+                        <span>New Actors</span>
+                    </div>
+                </div>
+                <div class="hero-card">
+                    <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=800&auto=format&fit=crop" alt="Fashion 2">
+                    <div class="hero-text">
+                        <h2>Paris Fashion Week Recap</h2>
+                        <span>New Actors</span>
+                    </div>
+                </div>
+                <div class="hero-card">
+                    <img src="https://images.unsplash.com/photo-1490481651871-32d2e76f8730?q=80&w=800&auto=format&fit=crop" alt="Fashion 3">
+                    <div class="hero-text">
+                        <h2>Street Stories</h2>
+                        <span>New Actors</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Galería principal: cambia o pega aquí tus elementos de imagen -->
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=800&auto=format&fit=crop" alt="Gallery 1"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbCE?q=80&w=800&auto=format&fit=crop" alt="Gallery 2"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=800&auto=format&fit=crop" alt="Gallery 3"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1514996937319-344454492b37?q=80&w=800&auto=format&fit=crop" alt="Gallery 4"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1504215680853-026ed2a45def?q=80&w=800&auto=format&fit=crop" alt="Gallery 5"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1504198453319-5ce911bafcde?q=80&w=800&auto=format&fit=crop" alt="Gallery 6"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=800&auto=format&fit=crop" alt="Gallery 7"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1503342452485-86a8abf2b3c6?q=80&w=800&auto=format&fit=crop" alt="Gallery 8"></div>
+            </div>
+
+            <!--
+                PASTE IMAGE SNIPPETS HERE
+                - Pegue sus bloques <img> o HTML relacionado con imágenes entre estas líneas.
+                - No elimine las líneas "PASTE IMAGE SNIPPETS START/END" si quiere conservar el espacio.
+
+                PASTE IMAGE SNIPPETS START
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                PASTE IMAGE SNIPPETS END
+            -->
+
+        </section>
+
+    </div>
+
+</body>
+</html>
