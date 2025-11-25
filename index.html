@@ -236,12 +236,62 @@
             .sidebar-img { height: 100px; }
         }
 
+        /* Sidebar toggle / overlay (mobile) */
+        .sidebar-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            font-size: 22px;
+            padding: 6px 10px;
+            cursor: pointer;
+        }
+
+        .sidebar-close {
+            display: none;
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            background: transparent;
+            border: none;
+            font-size: 26px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 30;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar-toggle { display: inline-block; z-index: 60; }
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 280px;
+                transform: translateX(-110%);
+                transition: transform .28s ease;
+                z-index: 40;
+                overflow-y: auto;
+            }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-close { display: block; }
+            .main-container { position: relative; }
+            .sidebar-overlay.active { display: block; }
+        }
+
     </style>
 </head>
 <body>
 
     <header>
         <div class="top-bar">
+            <button class="sidebar-toggle" aria-controls="sidebar" aria-expanded="false" aria-label="Abrir menú">☰</button>
             <div style="width: 100px;"></div> <div class="logo-container">
                 <div class="logo">
                     <span style="font-size: 30px;">&#9651;</span> PRISMA <br> <small style="font-size: 12px; letter-spacing: 5px;">MODA</small>
@@ -267,8 +317,10 @@
 
     <div class="main-container">
         
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <h2 class="sidebar-title">EMPRENDIMIENTOS<br>DE LA SEMANA</h2>
+
+            <button class="sidebar-close" aria-label="Cerrar menú">×</button>
 
             <div class="sidebar-item">
                 <img src="img/women-1838768_640.jpg" alt="Emprendimiento: mujeres" class="sidebar-img">
@@ -449,6 +501,50 @@
         </section>
 
     </div>
+
+    <div class="sidebar-overlay" aria-hidden="true"></div>
+
+    <script>
+        (function(){
+            const toggle = document.querySelector('.sidebar-toggle');
+            const sidebar = document.querySelector('#sidebar');
+            const closeBtn = document.querySelector('.sidebar-close');
+            const overlay = document.querySelector('.sidebar-overlay');
+
+            function openSidebar(){
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+                toggle && toggle.setAttribute('aria-expanded','true');
+                overlay.setAttribute('aria-hidden','false');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeSidebar(){
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                toggle && toggle.setAttribute('aria-expanded','false');
+                overlay.setAttribute('aria-hidden','true');
+                document.body.style.overflow = '';
+            }
+
+            toggle && toggle.addEventListener('click', function(){
+                if(sidebar.classList.contains('open')) closeSidebar(); else openSidebar();
+            });
+
+            closeBtn && closeBtn.addEventListener('click', closeSidebar);
+            overlay && overlay.addEventListener('click', closeSidebar);
+
+            // close if >900px to avoid stuck state
+            window.addEventListener('resize', function(){
+                if(window.innerWidth >= 900){
+                    sidebar.classList.remove('open');
+                    overlay.classList.remove('active');
+                    if(toggle) toggle.setAttribute('aria-expanded','false');
+                    document.body.style.overflow = '';
+                }
+            });
+        })();
+    </script>
 
 </body>
 </html>
